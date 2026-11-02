@@ -1,0 +1,59 @@
+/* =====================================================================
+   ANIMATIONS.CSS — transições entre slides e entradas internas
+   Tempos vêm de content/theme.js (variáveis --t-*).
+   ===================================================================== */
+
+/* ---------- troca de slide: fade + 20px horizontais ---------- */
+@keyframes slide-in-fwd  { from { opacity: 0; transform: translateX(20px); }  to { opacity: 1; transform: none; } }
+@keyframes slide-in-back { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: none; } }
+@keyframes slide-out-fwd  { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateX(-20px); } }
+@keyframes slide-out-back { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateX(20px); } }
+
+.slide.enter-fwd  { animation: slide-in-fwd  var(--t-slide) var(--ease-out) both; }
+.slide.enter-back { animation: slide-in-back var(--t-slide) var(--ease-out) both; }
+.slide.leave-fwd  { animation: slide-out-fwd  calc(var(--t-slide) * 0.8) var(--ease-soft) both; z-index: 1; }
+.slide.leave-back { animation: slide-out-back calc(var(--t-slide) * 0.8) var(--ease-soft) both; z-index: 1; }
+.slide.is-active { z-index: 2; }
+
+/* ---------- entradas internas (no máx. 3–4 por slide) ---------- */
+@keyframes rise  { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes fade  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes card  { from { opacity: 0; transform: translateY(20px) scale(0.99); } to { opacity: 1; transform: none; } }
+@keyframes draw  { from { stroke-dashoffset: var(--len, 2400); } to { stroke-dashoffset: 0; } }
+@keyframes drift { 0%, 100% { transform: translate(0, 0) rotate(0deg); } 50% { transform: translate(-14px, 10px) rotate(1.2deg); } }
+
+.slide.play [data-anim="title"] { animation: rise var(--t-title) var(--ease-out) both; }
+.slide.play [data-anim="text"]  { animation: fade var(--t-text) var(--ease-soft) both; animation-delay: calc(var(--t-title) * 0.5 + var(--i, 0) * var(--t-stagger)); }
+.slide.play [data-anim="card"]  { animation: card var(--t-card) var(--ease-out) both; animation-delay: calc(var(--t-title) * 0.6 + var(--i, 0) * var(--t-stagger)); }
+.slide.play [data-anim="draw"]  { stroke-dasharray: var(--len, 2400); animation: draw 1400ms var(--ease-out) both; animation-delay: 200ms; }
+
+/* formas ambientais: movimento lento e de baixo contraste */
+.decor .drift { animation: drift 22s var(--ease-soft) infinite; transform-box: fill-box; transform-origin: center; }
+
+/* ---------- revelação por etapas ---------- */
+[data-step] {
+  transition: opacity var(--t-card) var(--ease-out), transform var(--t-card) var(--ease-out), filter var(--t-card) var(--ease-out);
+}
+[data-step]:not(.is-revealed) {
+  opacity: 0;
+  transform: translateY(14px);
+  pointer-events: none;
+}
+/* modo "esmaecido": a etapa existe mas aguarda (usado no fluxo) */
+[data-step][data-step-mode="dim"]:not(.is-revealed) {
+  opacity: 0.22; transform: none; filter: saturate(0.4);
+}
+
+/* ---------- movimento reduzido ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html:not(.force-motion) .slide,
+  html:not(.force-motion) .slide * { animation-duration: 1ms !important; animation-delay: 0ms !important; }
+  html:not(.force-motion) [data-step] { transition-duration: 120ms !important; transform: none !important; }
+  html:not(.force-motion) .decor .drift { animation: none !important; }
+}
+html.reduce-motion .slide,
+html.reduce-motion .slide * { animation-duration: 1ms !important; animation-delay: 0ms !important; }
+html.reduce-motion [data-step] { transition-duration: 120ms !important; transform: none !important; }
+html.reduce-motion .decor .drift { animation: none !important; }
+html.reduce-motion .footer-progress .fill,
+html.reduce-motion .footer-progress .note { transition-duration: 1ms; }

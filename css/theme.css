@@ -1,0 +1,97 @@
+/* =====================================================================
+   THEME.CSS — fontes locais e tokens de design
+   Os valores de cor/fonte/tempo abaixo são apenas o PADRÃO.
+   Quem manda é content/theme.js (aplicado ao carregar a página).
+   ===================================================================== */
+
+/* ---- Fontes locais (SIL Open Font License — ver assets/fonts) ---- */
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('../assets/fonts/playfair-display-latin-wght-normal.woff2') format('woff2');
+  font-weight: 400 900; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('../assets/fonts/playfair-display-latin-wght-italic.woff2') format('woff2');
+  font-weight: 400 900; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'Manrope';
+  src: url('../assets/fonts/manrope-latin-wght-normal.woff2') format('woff2');
+  font-weight: 200 800; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('../assets/fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2');
+  font-weight: 100 800; font-style: normal; font-display: swap;
+}
+
+:root {
+  /* paleta obrigatória */
+  --color-sage:   #6A8F6A;
+  --color-gold:   #D3AF37;
+  --color-forest: #1F3D2E;
+  --color-cream:  #F4F1E8;
+  /* papéis */
+  --color-primary:   #D3AF37;
+  --color-secondary: #1F3D2E;
+  --color-bg-main:   #6A8F6A;
+  --color-bg-alt:    #D3AF37;
+  --color-text:      #F4F1E8;
+  /* sugestões (não aprovadas) */
+  --color-accent:        #B56F45;
+  --color-text-2-dark:   #D8DDCD;
+  --color-text-2-light:  #425B4B;
+  --color-line:          #A3B39C;
+  --color-forest-raised: #27493A;
+  --color-forest-deep:   #16301F;
+  --color-sage-deep:     #587D59;
+
+  --font-title: 'Playfair Display', Georgia, serif;
+  --font-body:  'Manrope', Arial, sans-serif;
+  --font-mono:  'JetBrains Mono', 'Courier New', monospace;
+
+  --transition-ms: 520;
+  --title-in-ms: 450;
+  --text-in-ms: 400;
+  --card-in-ms: 450;
+  --stagger-ms: 110;
+  --hover-ms: 180;
+  --jwt-transition-ms: 2000;
+
+  /* ---- tokens derivados (não precisam ser editados) ---- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: ease-in-out;
+  --t-slide: calc(var(--transition-ms) * 1ms);
+  --t-title: calc(var(--title-in-ms) * 1ms);
+  --t-text: calc(var(--text-in-ms) * 1ms);
+  --t-card: calc(var(--card-in-ms) * 1ms);
+  --t-stagger: calc(var(--stagger-ms) * 1ms);
+  --t-hover: calc(var(--hover-ms) * 1ms);
+
+  /* espaçamento — sistema de 8 px */
+  --s-1: 8px;  --s-2: 16px; --s-3: 24px; --s-4: 32px;
+  --s-6: 48px; --s-8: 64px; --s-10: 80px; --s-12: 96px;
+
+  /* margens do canvas 1920×1080 (≈6,7% × 7%) */
+  --pad-x: 128px;
+  --pad-top: 80px;
+  --footer-h: 96px;
+
+  /* raio e traço — iguais nos dois estilos (ponte Nouveau ↔ Bauhaus) */
+  --radius-s: 12px;
+  --radius-m: 20px;
+  --radius-l: 28px;
+  --radius-arch: 480px;
+  --stroke: 1.5px;
+  --stroke-strong: 3px;
+
+  /* escala tipográfica (canvas 1920×1080) */
+  --fs-cover: 112px;
+  --fs-title: 68px;
+  --fs-title-tech: 58px;
+  --fs-sub: 34px;
+  --fs-body: 30px;
+  --fs-small: 24px;
+  --fs-label: 21px;
+}

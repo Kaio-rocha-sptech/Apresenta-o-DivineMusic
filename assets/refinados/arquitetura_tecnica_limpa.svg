@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="620" viewBox="0 0 1600 620" role="img" aria-labelledby="title desc">
+  <title id="title">Arquitetura técnica Divine Music</title>
+  <desc id="desc">Fluxo simplificado na AWS. O usuário acessa o Internet Gateway e o roteamento da VPC encaminha a requisição ao Nginx, em EC2 na sub-rede pública. O Nginx encaminha às duas aplicações EC2 na sub-rede privada, que consultam o MySQL em EC2. O NAT Gateway na sub-rede pública representa a saída das aplicações para a Internet. As setas indicam a iniciativa dos fluxos, sem detalhar o tráfego de resposta.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1 1 9 5 1 9" fill="none" stroke="#1F6B46" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></marker>
+    <marker id="egress" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1 1 9 5 1 9" fill="none" stroke="#A77C12" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></marker>
+    <style>
+      text {font-family:Arial,Helvetica,sans-serif;fill:#172D24}
+      .zone {font-size:25px;font-weight:700}
+      .name {font-size:29px;font-weight:700}
+      .sub {font-size:20px;fill:#53645D}
+      .node {fill:white;stroke:#AFC8B8;stroke-width:1.6}
+      .main {fill:none;stroke:#1F6B46;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round}
+      .out {fill:none;stroke:#A77C12;stroke-width:2.8;stroke-dasharray:9 8;stroke-linejoin:round;stroke-linecap:round}
+    </style>
+  </defs>
+  <rect width="1600" height="620" fill="#FFFFFF"/>
+  <rect x="205" y="4" width="1383" height="576" rx="12" fill="#FFFFFF" stroke="#CCDAD0" stroke-width="1.5"/>
+  <text x="230" y="40" font-size="23" font-weight="700">AWS / VPC</text>
+  <g id="subrede-publica">
+    <rect x="430" y="65" width="425" height="495" rx="10" fill="#F2F7F3"/>
+    <text x="455" y="106" class="zone" fill="#1F6B46">Sub-rede pública</text>
+  </g>
+  <g id="subrede-privada">
+    <rect x="900" y="65" width="660" height="495" rx="10" fill="#F7F9F7"/>
+    <text x="925" y="106" class="zone">Sub-rede privada</text>
+  </g>
+  <g id="fluxo-principal" class="main">
+    <path d="M170 285H235" marker-end="url(#arrow)"/>
+    <path d="M400 285H456" marker-end="url(#arrow)"/>
+    <path d="M494 285H605" marker-end="url(#arrow)"/>
+    <path d="M825 285H885V205H945" marker-end="url(#arrow)"/>
+    <path d="M885 285V425H945" marker-end="url(#arrow)"/>
+    <path d="M1165 205H1230V327.5H1290" marker-end="url(#arrow)"/>
+    <path d="M1165 425H1230V327.5"/>
+  </g>
+  <g id="saida-internet" class="out">
+    <path d="M1045 510H825" marker-end="url(#egress)"/>
+    <path d="M605 502.5H317.5V340" marker-end="url(#egress)"/>
+  </g>
+  <g id="usuario">
+    <rect x="15" y="230" width="155" height="110" rx="10" class="node"/>
+    <text x="92.5" y="278" text-anchor="middle" class="name">Usuário</text>
+    <text x="92.5" y="311" text-anchor="middle" class="sub">Acesso web</text>
+  </g>
+  <g id="internet-gateway">
+    <rect x="235" y="230" width="165" height="110" rx="10" class="node"/>
+    <text x="317.5" y="276" text-anchor="middle" font-size="26" font-weight="700">Internet</text>
+    <text x="317.5" y="310" text-anchor="middle" font-size="26" font-weight="700">Gateway</text>
+  </g>
+  <g id="roteamento-vpc">
+    <circle cx="475" cy="285" r="18" fill="#FFFFFF" stroke="#1F6B46" stroke-width="2"/>
+    <path d="M466 285H484M475 276V294" stroke="#1F6B46" stroke-width="2"/>
+    <text x="500" y="340" text-anchor="middle" class="sub">Roteamento</text>
+    <text x="500" y="366" text-anchor="middle" class="sub">VPC</text>
+  </g>
+  <g id="nginx">
+    <rect x="605" y="230" width="220" height="110" rx="10" class="node"/>
+    <rect x="605" y="247" width="4" height="76" rx="2" fill="#1F6B46"/>
+    <text x="715" y="277" text-anchor="middle" font-size="34" font-weight="700">Nginx</text>
+    <text x="715" y="311" text-anchor="middle" class="sub">Proxy reverso · EC2</text>
+  </g>
+  <g id="aplicacao-1">
+    <rect x="945" y="150" width="220" height="110" rx="10" class="node"/>
+    <text x="1055" y="198" text-anchor="middle" class="name">Aplicação 1</text>
+    <text x="1055" y="233" text-anchor="middle" class="sub">EC2</text>
+  </g>
+  <g id="aplicacao-2">
+    <rect x="945" y="370" width="220" height="110" rx="10" class="node"/>
+    <text x="1055" y="418" text-anchor="middle" class="name">Aplicação 2</text>
+    <text x="1055" y="453" text-anchor="middle" class="sub">EC2</text>
+  </g>
+  <g id="mysql">
+    <rect x="1290" y="260" width="225" height="135" rx="10" class="node"/>
+    <text x="1402.5" y="315" text-anchor="middle" font-size="34" font-weight="700">MySQL</text>
+    <text x="1402.5" y="354" text-anchor="middle" class="sub">Banco de dados · EC2</text>
+  </g>
+  <g id="nat-gateway">
+    <rect x="605" y="460" width="220" height="85" rx="10" fill="#FFFAE9" stroke="#D6BE76" stroke-width="1.6"/>
+    <text x="715" y="496" text-anchor="middle" font-size="26" font-weight="700">NAT Gateway</text>
+    <text x="715" y="526" text-anchor="middle" class="sub">Saída para Internet</text>
+    <circle cx="1045" cy="510" r="4" fill="#A77C12"/>
+    <text x="1072" y="518" class="sub">Saída das aplicações</text>
+  </g>
+  <g id="legenda">
+    <path d="M235 607H275" class="main" marker-end="url(#arrow)"/>
+    <text x="290" y="614" class="sub">Acesso e consulta</text>
+    <path d="M600 607H640" class="out" marker-end="url(#egress)"/>
+    <text x="655" y="614" class="sub">Saída para Internet via NAT</text>
+  </g>
+</svg>
